@@ -1,0 +1,14 @@
+# Ignore vendor directory
+/vendor/
+
+# Ignore any logs
+/logs/
+
+# Ignore any cache directories
+/cache/
+
+# Ignore any temporary files
+/tmp/
+
+# Ignore environment-specific files
+.env

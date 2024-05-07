@@ -1,0 +1,1 @@
+{"version":1,"defects":{"Tests\\Controllers\\LoanControllerTest::testGetLoanSuccess":8,"Tests\\Controllers\\LoanControllerTest::testGetLoanBadRequest":8,"Tests\\Controllers\\LoanControllerTest::testGetLoanNotFound":8,"Tests\\Controllers\\LoanControllerTest::testCreateLoanSuccess":8,"Tests\\Controllers\\LoanControllerTest::testCreateLoanBadRequest":8},"times":[]}
