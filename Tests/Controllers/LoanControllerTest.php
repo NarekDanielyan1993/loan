@@ -2,14 +2,14 @@
 
 namespace Tests\Controllers;
 
-use Tests\BaseTestCase;
 use App\Controllers\LoanController;
-use App\Services\LoanService;
 use App\Repositories\LoanRepository;
+use App\Services\LoanService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
+use Tests\BaseTestCase;
 
 class LoanControllerTest extends BaseTestCase
 {
@@ -48,7 +48,7 @@ class LoanControllerTest extends BaseTestCase
         $container = $app->getContainer();
         $container->set(LoanRepository::class, $this->loanRepositoryMock);
 
-        $request = $this->createRequest('GET', "/loan/loans/$loanId");
+        $request = $this->createRequest('GET', "/loans/$loanId");
         $response = $app->handle($request);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -59,7 +59,7 @@ class LoanControllerTest extends BaseTestCase
 
     public function testGetLoanBadRequest()
     {
-        $request = $this->createRequest('GET', '/loan/loans/abc');
+        $request = $this->createRequest('GET', '/loans/abc');
         $response = $this->runApp($request);
         $body = (string) $response->getBody();
 
@@ -80,7 +80,7 @@ class LoanControllerTest extends BaseTestCase
         $container = $app->getContainer();
         $container->set(LoanRepository::class, $this->loanRepositoryMock);
 
-        $request = $this->createRequest('GET', "/loan/loans/$loanId");
+        $request = $this->createRequest('GET', "/loans/$loanId");
         $response = $this->runApp($request);
         $body = (string) $response->getBody();
         $payload = json_decode($body, true);
@@ -102,9 +102,9 @@ class LoanControllerTest extends BaseTestCase
         $container = $app->getContainer();
         $container->set(LoanRepository::class, $this->loanRepositoryMock);
 
-        $request = $this->createRequest('POST', "/loan/loans", ['amount' => $amount]);
+        $request = $this->createRequest('POST', '/loans', ['amount' => $amount]);
         $response = $this->runApp($request);
-        $responseData = ["message" => "success"];
+        $responseData = ['message' => 'success'];
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertSame(201, $response->getStatusCode());
         $this->assertSame('application/json', $response->getHeaderLine('Content-Type'));
@@ -114,7 +114,7 @@ class LoanControllerTest extends BaseTestCase
     public function testCreateLoanBadRequest()
     {
         $amount = 'abc';
-        $request = $this->createRequest('POST', '/loan/loans', ['amount' => 'abc']);
+        $request = $this->createRequest('POST', '/loans', ['amount' => 'abc']);
         $response = $this->runApp($request);
         $body = (string) $response->getBody();
 
@@ -137,9 +137,9 @@ class LoanControllerTest extends BaseTestCase
         $container = $app->getContainer();
         $container->set(LoanRepository::class, $this->loanRepositoryMock);
 
-        $request = $this->createRequest('PUT', "/loan/loans/$loanId", ['amount' => $amount]);
+        $request = $this->createRequest('PUT', "/loans/$loanId", ['amount' => $amount]);
         $response = $this->runApp($request);
-        $responseData = ["message" => "success"];
+        $responseData = ['message' => 'success'];
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertSame(200, $response->getStatusCode());
@@ -150,7 +150,7 @@ class LoanControllerTest extends BaseTestCase
     public function testUpdateLoanBadRequestWithId()
     {
         $loanId = 'abc';
-        $request = $this->createRequest('PUT', "/loan/loans/$loanId", ['amount' => 100]);
+        $request = $this->createRequest('PUT', "/loans/$loanId", ['amount' => 100]);
         $response = $this->runApp($request);
         $body = (string) $response->getBody();
 
@@ -164,7 +164,7 @@ class LoanControllerTest extends BaseTestCase
         $app = $this->getAppInstance();
         $loanId = 1;
 
-        $request = $this->createRequest('PUT', "/loan/loans/$loanId", ['amount' => 'abc']);
+        $request = $this->createRequest('PUT', "/loans/$loanId", ['amount' => 'abc']);
         $response = $this->runApp($request);
         $body = (string) $response->getBody();
         $payload = json_decode($body, true);
@@ -186,7 +186,7 @@ class LoanControllerTest extends BaseTestCase
         $container = $app->getContainer();
         $container->set(LoanRepository::class, $this->loanRepositoryMock);
 
-        $request = $this->createRequest('PUT', "/loan/loans/$loanId", ['amount' => 100]);
+        $request = $this->createRequest('PUT', "/loans/$loanId", ['amount' => 100]);
         $response = $this->runApp($request);
         $body = (string) $response->getBody();
         $payload = json_decode($body, true);
@@ -208,7 +208,7 @@ class LoanControllerTest extends BaseTestCase
         $container = $app->getContainer();
         $container->set(LoanRepository::class, $this->loanRepositoryMock);
 
-        $request = $this->createRequest("DELETE", "/loan/loans/$loanId");
+        $request = $this->createRequest('DELETE', "/loans/$loanId");
         $response = $this->runApp($request);
         $body = (string) $response->getBody();
         $payload = json_decode($body, true);
@@ -216,7 +216,6 @@ class LoanControllerTest extends BaseTestCase
         $this->assertSame('RESOURCE_NOT_FOUND', $payload['type']);
         $this->assertSame(LOAN_NOT_FOUND, $payload['message']);
     }
-
 
     public function testDeleteLoanSuccess()
     {
@@ -231,9 +230,9 @@ class LoanControllerTest extends BaseTestCase
         $container = $app->getContainer();
         $container->set(LoanRepository::class, $this->loanRepositoryMock);
 
-        $request = $this->createRequest('DELETE', "/loan/loans/$loanId");
+        $request = $this->createRequest('DELETE', "/loans/$loanId");
         $response = $this->runApp($request);
-        $responseData = ["message" => "success"];
+        $responseData = ['message' => 'success'];
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertSame(200, $response->getStatusCode());
@@ -244,7 +243,7 @@ class LoanControllerTest extends BaseTestCase
     public function testDeleteLoanBadRequest()
     {
         $loanId = 'abc';
-        $request = $this->createRequest('DELETE', "/loan/loans/$loanId");
+        $request = $this->createRequest('DELETE', "/loans/$loanId");
         $response = $this->runApp($request);
         $body = (string) $response->getBody();
 
