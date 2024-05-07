@@ -7,8 +7,8 @@ use Slim\App;
 define('APP_ROOT', dirname(__DIR__));
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
-require_once dirname(__DIR__) . '/app/constants/error.php';
-require_once dirname(__DIR__) . '/app/constants/route.php';
+require_once dirname(__DIR__) . '/App/Constants/error.php';
+require_once dirname(__DIR__) . '/App/Constants/route.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 1));
 $dotenv->load();
